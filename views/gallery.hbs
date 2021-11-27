@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="col-sm-12 text-center text-info">
+        <img src="/images/logo.png" alt="canvas logo">
+        <!--<h1 class="title">{{title}}</h1>-->
+    </div>
+    <div class="col-sm-12 text-danger text-center">
+        <i class="fa fa-youtube-play" style="font-size: 2rem;"></i>
+    </div>
+    <ul class="nav justify-content-center pt-3">
+        <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">Gallery</a>
+        </li>
+        <li class="nav-item">
+            <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    Categories
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/category?q=pencil">Pencil Drawing</a></li>
+                    <li><a class="dropdown-item" href="/category?q=painting">Painting</a></li>
+                    <li><a class="dropdown-item" href="/category?q=art">Bottle Art</a></li>
+                    <li><a class="dropdown-item" href="/category?q=mural">Mural Painting</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+{{#if gallery}}
+<div class="container-fluid">
+    <!-- Carousel -->
+    <div id="images" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            {{#each v}}
+            {{#if @first}}
+            <button type="button" data-bs-target="#images" data-bs-slide-to="0" class="active"></button>
+            {{else}}
+            <button type="button" data-bs-target="#images" data-bs-slide-to="{{@index}}"></button>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner text-center">
+            {{#each v}}
+            {{#if @first}}
+            <div class="carousel-item active">
+                {{#each this}}
+                <img src="/images/gallery/{{this.filename}}.jpg" alt="painting" class="imageCar">
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="carousel-item">
+                {{#each this}}
+                <img src="/images/gallery/{{this.filename}}.jpg" alt="painting" class="imageCar">
+                {{/each}}
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#images" data-bs-slide="prev">
+            <!--<span class="carousel-control-prev-icon"></span>-->
+            <i class="fa fa-angle-left text-dark" style="font-size: 5rem;"></i>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#images" data-bs-slide="next">
+            <!--<span class="carousel-control-next-icon"></span>-->
+            <i class="fa fa-angle-right text-dark" style="font-size: 5rem;"></i>
+        </button>
+    </div>
+</div>
+{{/if}}
+{{#if galleryp}}
+<div class="container-fluid text-center p-2">
+    {{#each g}}
+    <div class="row">
+        {{#each this}}
+        <div class="col-lg-6 col-sm-12 p-2">
+            <img src="/images/galleryp/{{this.filename}}.jpg" alt="painting" class="imgCar">
+            <p class="pt-2">{{this.description}}</p>
+        </div>
+        {{/each}}
+    </div>
+    {{/each}}
+</div>
+{{/if}}

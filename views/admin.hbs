@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="col-sm-12 text center">
+        <form action="/loginadm" method="post">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+            {{#if error}}
+            <p class="text-danger">There was error logging in</p>
+            {{else if errorPass}}
+            <p class="text-danger">Wrong Password</p>
+            {{else if errorUser}}
+            <p class="text-danger">Username Does Not Exist</p>
+            {{/if}}
+            <button type="submit" class="btn btn-primary mt-2">Login</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,356 @@
+{{#if videos}}
+<div class="container">
+    <h2>Change Videos</h2>
+</div>
+<div class="container-fluid">
+    <!-- Carousel -->
+    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            {{#each v}}
+            {{#if @first}}
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{@index}}" class="active"></button>
+            {{else}}
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{@index}}"></button>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner text-center">
+            {{#each v}}
+            {{#if @first}}
+            <div class="carousel-item active">
+                <video src="/videos/{{this.name}}.mp4" autoplay muted class="video"></video>
+            </div>
+            {{else}}
+            <div class="carousel-item">
+                <video src="/videos/{{this.name}}.mp4" autoplay muted class="video"></video>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <!--<span class="carousel-control-prev-icon"></span>-->
+            <i class="fa fa-angle-left text-dark" style="font-size: 5rem;"></i>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <!--<span class="carousel-control-next-icon"></span>-->
+            <i class="fa fa-angle-right text-dark" style="font-size: 5rem;"></i>
+        </button>
+    </div>
+</div>
+<div class="container">
+    <div class="col-sm-12 text-center">
+        <form action="/upvideo" method="post" enctype="multipart/form-data">
+            <label for="filename" class="form-label">Filename:</label>
+            <input type="text" class="form-control" id="filename" placeholder="Enter Unique Filename" name="filename">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" class="form-control" id="file" placeholder="Choose Video File" name="file">
+            {{#if error}}
+            <p class="text-danger">Error While Uploading...</p>
+            {{else if errorkey}}
+            <p class="text-danger">Filename Already Exist!</p>
+            {{/if}}
+            <button type="submit" class="btn btn-primary mt-2">Upload</button>
+        </form>
+        {{#if errordelete}}
+        <p class="text-danger">Error While Deleting...</p>
+        {{/if}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Video</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each v}}
+                <tr>
+                    <td>{{this.name}}</td>
+                    <td><video src="/videos/{{this.name}}.mp4" autoplay muted class="videotable"></video></td>
+                    <td><a href="/deleteVid?v={{this.name}}"><button class="btn btn-danger">Delete</button></a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{else if sample}}
+<div class="container-fluid">
+    <!-- Carousel -->
+    <div id="images" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            {{#each v}}
+            {{#if @first}}
+            <button type="button" data-bs-target="#images" data-bs-slide-to="0" class="active"></button>
+            {{else}}
+            <button type="button" data-bs-target="#images" data-bs-slide-to="{{@index}}"></button>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner text-center">
+            {{#each v}}
+            {{#if @first}}
+            <div class="carousel-item active">
+                {{#each this}}
+                <img src="/images/{{this.filename}}.jpg" alt="painting" class="imageCar">
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="carousel-item">
+                {{#each this}}
+                <img src="/images/{{this.filename}}.jpg" alt="painting" class="imageCar">
+                {{/each}}
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#images" data-bs-slide="prev">
+            <!--<span class="carousel-control-prev-icon"></span>-->
+            <i class="fa fa-angle-left text-dark" style="font-size: 5rem;"></i>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#images" data-bs-slide="next">
+            <!--<span class="carousel-control-next-icon"></span>-->
+            <i class="fa fa-angle-right text-dark" style="font-size: 5rem;"></i>
+        </button>
+    </div>
+</div>
+<div class="container">
+    <div class="col-sm-12 text-center">
+        <form action="/upsample" method="post" enctype="multipart/form-data">
+            <label for="filename" class="form-label">Filename:</label>
+            <input type="text" class="form-control" id="filename" placeholder="Enter Unique Filename" name="filename">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" class="form-control" id="file" placeholder="Choose Image File" name="file">
+            {{#if error}}
+            <p class="text-danger">Error While Uploading...</p>
+            {{else if errorkey}}
+            <p class="text-danger">Filename Already Exist!</p>
+            {{/if}}
+            <button type="submit" class="btn btn-primary mt-2">Upload</button>
+        </form>
+        {{#if errordelete}}
+        <p class="text-danger">Error While Deleting...</p>
+        {{/if}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Image</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each v}}
+                {{#each this}}
+                <tr>
+                    <td>{{this.filename}}</td>
+                    <td><img src="/images/{{this.filename}}.jpg" autoplay muted class="videotable"></td>
+                    <td><a href="/deleteSam?v={{this.filename}}"><button class="btn btn-danger">Delete</button></a></td>
+                </tr>
+                {{/each}}
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{else if gallery}}
+<div class="container-fluid">
+    <!-- Carousel -->
+    <div id="images" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            {{#each v}}
+            {{#if @first}}
+            <button type="button" data-bs-target="#images" data-bs-slide-to="0" class="active"></button>
+            {{else}}
+            <button type="button" data-bs-target="#images" data-bs-slide-to="{{@index}}"></button>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner text-center">
+            {{#each v}}
+            {{#if @first}}
+            <div class="carousel-item active">
+                {{#each this}}
+                <img src="/images/gallery/{{this.filename}}.jpg" alt="painting" class="imageCar">
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="carousel-item">
+                {{#each this}}
+                <img src="/images/gallery/{{this.filename}}.jpg" alt="painting" class="imageCar">
+                {{/each}}
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#images" data-bs-slide="prev">
+            <!--<span class="carousel-control-prev-icon"></span>-->
+            <i class="fa fa-angle-left text-dark" style="font-size: 5rem;"></i>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#images" data-bs-slide="next">
+            <!--<span class="carousel-control-next-icon"></span>-->
+            <i class="fa fa-angle-right text-dark" style="font-size: 5rem;"></i>
+        </button>
+    </div>
+</div>
+<div class="container">
+    <div class="col-sm-12 text-center">
+        <form action="/upgallery" method="post" enctype="multipart/form-data">
+            <label for="filename" class="form-label">Filename:</label>
+            <input type="text" class="form-control" id="filename" placeholder="Enter Unique Filename" name="filename">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" class="form-control" id="file" placeholder="Choose Image File" name="file">
+            {{#if error}}
+            <p class="text-danger">Error While Uploading...</p>
+            {{else if errorkey}}
+            <p class="text-danger">Filename Already Exist!</p>
+            {{/if}}
+            <button type="submit" class="btn btn-primary mt-2">Upload</button>
+        </form>
+        {{#if errordelete}}
+        <p class="text-danger">Error While Deleting...</p>
+        {{/if}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Image</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each v}}
+                {{#each this}}
+                <tr>
+                    <td>{{this.filename}}</td>
+                    <td><img src="/images/gallery/{{this.filename}}.jpg" autoplay muted class="videotable"></td>
+                    <td><a href="/deleteGal?v={{this.filename}}"><button class="btn btn-danger">Delete</button></a></td>
+                </tr>
+                {{/each}}
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/if}}
+{{#if galleryp}}
+<div class="container">
+    <div class="col-sm-12 text-center">
+        <form action="/upgalleryp" method="post" enctype="multipart/form-data">
+            <label for="filename" class="form-label">Filename:</label>
+            <input type="text" class="form-control" id="filename" placeholder="Enter Unique Filename" name="filename">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" class="form-control" id="file" placeholder="Choose Image File" name="file">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" class="form-control" id="description" placeholder="Enter Description For Display" name="description">
+            {{#if error}}
+            <p class="text-danger">Error While Uploading...</p>
+            {{else if errorkey}}
+            <p class="text-danger">Filename Already Exist!</p>
+            {{/if}}
+            <button type="submit" class="btn btn-primary mt-2">Upload</button>
+        </form>
+        {{#if errordelete}}
+        <p class="text-danger">Error While Deleting...</p>
+        {{/if}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each v}}
+                <tr>
+                    <td>{{this.filename}}</td>
+                    <td><img src="/images/galleryp/{{this.filename}}.jpg" class="videotable"></td>
+                    <td>{{this.description}}</td>
+                    <td><a href="/deleteGalp?v={{this.filename}}"><button class="btn btn-danger">Delete</button></a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/if}}
+{{#if category}}
+<div class="container">
+    <div class="col-sm-12 text-center">
+        <form action="/upcategory" method="post" enctype="multipart/form-data">
+            <label for="filename" class="form-label">Filename:</label>
+            <input type="text" class="form-control" id="filename" placeholder="Enter Unique Filename" name="filename">
+            <label for="file" class="form-label">File:</label>
+            <input type="file" class="form-control" id="file" placeholder="Choose Image File" name="file">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" class="form-control" id="description" placeholder="Enter Description For Display" name="description">
+            <label for="artist" class="form-label">Artist:</label>
+            <input type="text" class="form-control" id="artist" placeholder="Enter Artist For Display" name="artist">
+            <label for="price" class="form-label">Price:</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter Price For Display" name="price">
+            <lablel for="category" class="form-label">Category:</lablel>
+            <select name="category" class="form-control" id="category">
+                <option value="Pencil Drawing">Pencil Drawing</option>
+                <option value="Painting">Painting</option>
+                <option value="Bottle Art">Bottle Art</option>
+                <option value="Mural Painting">Mural Painting</option>
+            </select>
+            {{#if error}}
+            <p class="text-danger">Error While Uploading...</p>
+            {{else if errorkey}}
+            <p class="text-danger">Filename Already Exist!</p>
+            {{/if}}
+            <button type="submit" class="btn btn-primary mt-2">Upload</button>
+        </form>
+        {{#if errordelete}}
+        <p class="text-danger">Error While Deleting...</p>
+        {{/if}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Artist</th>'
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each v}}
+                <tr>
+                    <td>{{this.filename}}</td>
+                    <td><img src="/images/category/{{this.filename}}.jpg" class="videotable"></td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.artist}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.category}}</td>
+                    <td><a href="/deleteCat?v={{this.filename}}"><button class="btn btn-danger">Delete</button></a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/if}}
